@@ -30,6 +30,7 @@ def menuItemJSON(restaurant_id, menu_id):
 @app.route('/restaurant/JSON')
 def restaurantsJSON():
     restaurants = session.query(Restaurant).all()
+    #print (restaurants)
     return jsonify(restaurants= [r.serialize for r in restaurants])
 
 
@@ -38,6 +39,7 @@ def restaurantsJSON():
 @app.route('/restaurant/')
 def showRestaurants():
   restaurants = session.query(Restaurant).order_by(asc(Restaurant.name))
+  print (restaurants)
   return render_template('restaurants.html', restaurants = restaurants)
 
 #Create a new restaurant
@@ -142,4 +144,5 @@ def deleteMenuItem(restaurant_id,menu_id):
 if __name__ == '__main__':
   app.secret_key = 'super_secret_key'
   app.debug = True
+  connect_args={'check_same_thread':False}
   app.run(host = '0.0.0.0', port = 5000)
